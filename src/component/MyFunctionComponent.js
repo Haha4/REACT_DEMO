@@ -1,4 +1,10 @@
+
+import { useParams } from 'react-router-dom';
+
+
+
 const MyFunctionComponent = (props) => {
-  return <div>{props.message}</div>;
+  let { id } = useParams();
+  return <div>路由参数{id}</div>;
 };
 export default MyFunctionComponent;

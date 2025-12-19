@@ -1,33 +1,31 @@
-import logo from './logo.svg';
-import MyComponent from './component/MyComponent';
-import MyFunctionComponent from './component/MyFunctionComponent';
-import MyClassComponent from './component/MyClassComponent';
-import MyControlledForm from './component/MyControlledForm';
-import MyUncontrolledForm from './component/MyUncontrolledForm';
-import './App.css';
-import ThemeContext from './injectData/ThemeContext';
+import MyComponent from "./component/MyComponent";
+import MyFunctionComponent from "./component/MyFunctionComponent";
+import MyClassComponent from "./component/MyClassComponent";
+import MyControlledForm from "./component/MyControlledForm";
+import "./App.css";
+
+import { Routes, Route, useNavigate } from "react-router-dom";
+
 function App() {
-   const items = [
-    { id: 1, name: 'Item 1' },
-    { id: 2, name: 'Item 2' },
-    { id: 3, name: 'Item 3' }
-   ];
+  const navigate = useNavigate();
+
+  const goFunction = (path) => {
+    navigate(path);
+  };
+
   return (
     <div className="App">
-       <MyFunctionComponent message="Hello, World!" />
-       <MyClassComponent message="Hello, World!MyClassComponent"/>
-       <ThemeContext.Provider value="dark">
-         <MyComponent >
-               <MyControlledForm />
-       </MyComponent>
-       </ThemeContext.Provider>
-       <MyComponent >
-               <MyControlledForm />
-       </MyComponent>
-       <h3>受控组件</h3>
-       <MyControlledForm />
-       <h3>非受控组件</h3>
-       <MyUncontrolledForm />
+      <button onClick={() => goFunction("/")}>跳转首页</button>
+      <button onClick={() => goFunction("/about")}>跳转关于页</button>
+      <button onClick={() => goFunction("/contact/123")}>跳转联系页</button>
+      <button onClick={() => goFunction("/post")}>跳转 Post</button>
+
+      <Routes>
+        <Route path="/" element={<MyFunctionComponent />} />
+        <Route path="/about" element={<MyClassComponent />} />
+        <Route path="/post" element={<MyComponent />} />
+        <Route path="/contact/:id" element={<MyControlledForm />} />
+      </Routes>
     </div>
   );
 }

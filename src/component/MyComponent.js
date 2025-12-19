@@ -1,24 +1,36 @@
 import { useEffect, useState } from "react";
+import { Routes, Route } from "react-router-dom";
+
+import Users from "./Users";
+import Settings from "./Setting";
 
 function MyComponent() {
   const [count, setCount] = useState(0);
+
   useEffect(() => {
-    // 这里就是 componentDidMount 的逻辑
     console.log("组件挂载完成");
 
-    // 可选：return 一个清理函数，对应 componentWillUnmount
     return () => {
       console.log("组件卸载");
     };
-  }, [count]); // ✅ 空依赖数组表示只在挂载和卸载时触发
+  }, []); // ✅ 只在挂载 / 卸载时执行
+
   function handleClick() {
-    return setCount(count + 1);
+    setCount((prev) => prev + 1);
   }
+
   return (
     <div>
-      Hello, MyComponent! 当前计数: {count}
-      <div onClick={handleClick}>点击4我</div>
+      <div>Hello, MyComponent! 当前计数: {count}</div>
+      <button onClick={handleClick}>点击我</button>
+
+      {/* v7 嵌套路由 */}
+      <Routes>
+        <Route path="post/users" element={<Users />} />
+        <Route path="post/settings" element={<Settings />} />
+      </Routes>
     </div>
   );
 }
+
 export default MyComponent;
